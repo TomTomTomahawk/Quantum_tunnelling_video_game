@@ -44,7 +44,7 @@ int main()
 
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
         y = y+10;
-        // move up...
+        // move down...
     }   
     
     cercle.setPosition(x,y);
