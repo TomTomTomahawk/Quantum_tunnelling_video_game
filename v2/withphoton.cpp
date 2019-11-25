@@ -86,7 +86,7 @@ int main()
         }    
 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && y_electron <= 490) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && y_electron < 500) {
             y_electron = y_electron +10;
             // move up...
         }   
@@ -102,7 +102,7 @@ int main()
         Ec=Ec+0.1;
         x_photon=x_photon+3;
     } else {
-        Ec = Ec - 0.05;
+        Ec = Ec - 0.01;
         x_photon=x_photon+10;
     }
     
