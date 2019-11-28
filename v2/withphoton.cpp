@@ -21,7 +21,6 @@ int main()
     y_photon=300;
     int rayon_photon = 10; // rayon du cercle
 
-
     double Ec=0;
 
     int windowSizeX = 800, windowSizeY = 600;
@@ -32,27 +31,69 @@ int main()
     CircleShape photon(rayon_photon);
     photon.setFillColor(Color::Yellow);
 
-    VertexArray phaut(LinesStrip,6);
-    phaut[0].position = sf::Vector2f(0, 300);
-    phaut[1].position = sf::Vector2f(100, 300);
-    phaut[2].position = sf::Vector2f(100, 150);
-    phaut[3].position = sf::Vector2f(250, 150);
-    phaut[4].position = sf::Vector2f(250, 300);
-    phaut[5].position = sf::Vector2f(400, 300);
-    
-    VertexArray pbas(LinesStrip,6);
-    pbas[0].position = sf::Vector2f(0, 300);
-    pbas[1].position = sf::Vector2f(100, 300);
-    pbas[2].position = sf::Vector2f(100, 450);
-    pbas[3].position = sf::Vector2f(250, 450);
-    pbas[4].position = sf::Vector2f(250, 300);
-    pbas[5].position = sf::Vector2f(400, 300);
-    
 
     RenderWindow window(VideoMode(windowSizeX, windowSizeY), "projet MQ");
     window.setFramerateLimit(50);
 
 
+//Sprites
+
+    Image image;
+    image.loadFromFile("electron5.png");
+    image.createMaskFromColor(Color::Black);
+    Texture tex;
+    tex.loadFromImage(image);
+    Sprite sp;
+    sp.setTexture(tex);
+    sp.setScale(2*rayon_electron/sp.getLocalBounds().width, 2*rayon_electron/sp.getLocalBounds().height);
+    sp.setOrigin(rayon_electron,rayon_electron);
+
+
+//affichage Energie
+
+    sf::Font font;
+
+    if ( !font.loadFromFile( "./Arial.ttf" ) )
+    {
+        std::cout << "Error loading file" << std::endl;
+        
+        system( "pause" );
+    }
+
+    sf::Text text;
+
+    text.setFont( font );
+    
+    text.setString( to_string(Ec) );
+
+    text.setCharacterSize( 25 );
+    
+    text.setFillColor( sf::Color::Red );
+    
+    text.setStyle( sf::Text::Style::Bold | sf::Text::Style::Underlined );
+    
+    text.setOutlineColor( sf::Color::Yellow );
+    text.setOutlineThickness( 10 );
+    text.setPosition(100,100);
+
+
+//Affichage puit
+
+    int x1,x2,x3,x4,x5,x6;
+    x1=windowSizeX;
+    x2=windowSizeX+100;
+    x3=windowSizeX+100;
+    x4=windowSizeX+250;
+    x5=windowSizeX+250;
+    x6=windowSizeX+400;
+
+    VertexArray phaut(LinesStrip,6);
+    phaut[0].position = sf::Vector2f(x1, 300);
+    phaut[1].position = sf::Vector2f(x2, 300);
+    phaut[2].position = sf::Vector2f(x3, 150);
+    phaut[3].position = sf::Vector2f(x4, 150);
+    phaut[4].position = sf::Vector2f(x5, 300);
+    phaut[5].position = sf::Vector2f(x6, 300);
 
     // on fait tourner le programme tant que la fenêtre n’a pas été fermée
 
@@ -72,14 +113,14 @@ int main()
         }    
 
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && y_electron < 500) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && y_electron < windowSizeY-100.0) {
             y_electron = y_electron +10;
             // move up...
         }   
     
-    if (
+     
     
-    if (x_photon >= windowSizeX) {
+    if (x_photon >= windowSizeX) {//hauteur de lancement du photon
         x_photon=0;
         y_photon=600.0*(rand()/(RAND_MAX+1.0));
     }
@@ -92,18 +133,46 @@ int main()
         x_photon=x_photon+10;
     }
     
+    if (x6 <= 0) {//gerer la position du puit, 500 equivaut à 500 frames, soit 10 secondes car 50 f/s
+        x1=windowSizeX;
+        x2=windowSizeX+100;
+        x3=windowSizeX+100;
+        x4=windowSizeX+250;
+        x5=windowSizeX+250;
+        x6=windowSizeX+400;
+    }
+
+    x1=x1-1;
+    x2=x2-1;
+    x3=x3-1;
+    x4=x4-1;
+    x5=x5-1;
+    x6=x6-1;
+
+    phaut[0].position = sf::Vector2f(x1, 300);
+    phaut[1].position = sf::Vector2f(x2, 300);
+    phaut[2].position = sf::Vector2f(x3, 150);
+    phaut[3].position = sf::Vector2f(x4, 150);
+    phaut[4].position = sf::Vector2f(x5, 300);
+    phaut[5].position = sf::Vector2f(x6, 300);
+
+    
     electron.setPosition(x_electron,y_electron);
     window.draw(electron);
 
-    photon.setPosition(x_photon,y_photon);
-    window.draw(photon);
+
 
     text.setString( to_string(Ec) );
     window.draw( text );
 
+    sp.setPosition(x_electron+5,y_electron+5);
+    window.draw(sp);
+
+    photon.setPosition(x_photon,y_photon);
+    window.draw(photon);
 
     window.draw(phaut);
-    window.draw(pbas);
+
     window.display();
     }//fin boucle while SFML
 
