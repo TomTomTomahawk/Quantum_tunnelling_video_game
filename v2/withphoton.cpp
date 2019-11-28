@@ -21,6 +21,7 @@ int main()
     y_photon=300;
     int rayon_photon = 10; // rayon du cercle
 
+
     double Ec=0;
 
     int windowSizeX = 800, windowSizeY = 600;
@@ -31,40 +32,25 @@ int main()
     CircleShape photon(rayon_photon);
     photon.setFillColor(Color::Yellow);
 
+    VertexArray phaut(LinesStrip,6);
+    phaut[0].position = sf::Vector2f(0, 300);
+    phaut[1].position = sf::Vector2f(100, 300);
+    phaut[2].position = sf::Vector2f(100, 150);
+    phaut[3].position = sf::Vector2f(250, 150);
+    phaut[4].position = sf::Vector2f(250, 300);
+    phaut[5].position = sf::Vector2f(400, 300);
+    
+    VertexArray pbas(LinesStrip,6);
+    pbas[0].position = sf::Vector2f(0, 300);
+    pbas[1].position = sf::Vector2f(100, 300);
+    pbas[2].position = sf::Vector2f(100, 450);
+    pbas[3].position = sf::Vector2f(250, 450);
+    pbas[4].position = sf::Vector2f(250, 300);
+    pbas[5].position = sf::Vector2f(400, 300);
+    
 
     RenderWindow window(VideoMode(windowSizeX, windowSizeY), "projet MQ");
     window.setFramerateLimit(50);
-
-
-
-//affichage Energie
-
-    sf::Font font;
-
-    if ( !font.loadFromFile( "./Arial.ttf" ) )
-    {
-        std::cout << "Error loading file" << std::endl;
-        
-        system( "pause" );
-    }
-
-    sf::Text text;
-
-    text.setFont( font );
-    
-    text.setString( to_string(Ec) );
-
-    text.setCharacterSize( 25 );
-    
-    text.setFillColor( sf::Color::Red );
-    
-    text.setStyle( sf::Text::Style::Bold | sf::Text::Style::Underlined );
-    
-    text.setOutlineColor( sf::Color::Yellow );
-    text.setOutlineThickness( 10 );
-    text.setPosition(100,100);
-
-
 
 
 
@@ -91,7 +77,7 @@ int main()
             // move up...
         }   
     
-     
+    if (
     
     if (x_photon >= windowSizeX) {
         x_photon=0;
@@ -116,8 +102,8 @@ int main()
     window.draw( text );
 
 
-
-
+    window.draw(phaut);
+    window.draw(pbas);
     window.display();
     }//fin boucle while SFML
 
