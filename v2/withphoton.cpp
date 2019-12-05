@@ -81,17 +81,23 @@ int main()
 
     int x1,x2,x3,x4,x5,x6;
     x1=windowSizeX;
-    x2=windowSizeX+100;
-    x3=windowSizeX+100;
-    x4=windowSizeX+250;
-    x5=windowSizeX+250;
-    x6=windowSizeX+400;
+    x2=windowSizeX+150;
+    x3=windowSizeX+150;
+    x4=windowSizeX+300;
+    x5=windowSizeX+300;
+    x6=windowSizeX+450;
+
+    int y3, maxpuit, minpuit;
+    maxpuit=600;
+    minpuit=5;
+
+    y3=150;
 
     VertexArray phaut(LinesStrip,6);
     phaut[0].position = sf::Vector2f(x1, 300);
     phaut[1].position = sf::Vector2f(x2, 300);
-    phaut[2].position = sf::Vector2f(x3, 150);
-    phaut[3].position = sf::Vector2f(x4, 150);
+    phaut[2].position = sf::Vector2f(x3, y3);
+    phaut[3].position = sf::Vector2f(x4, y3);
     phaut[4].position = sf::Vector2f(x5, 300);
     phaut[5].position = sf::Vector2f(x6, 300);
 
@@ -134,12 +140,13 @@ int main()
     }
     
     if (x6 <= 0) {//gerer la position du puit, 500 equivaut à 500 frames, soit 10 secondes car 50 f/s
-        x1=windowSizeX;
-        x2=windowSizeX+100;
-        x3=windowSizeX+100;
-        x4=windowSizeX+250;
-        x5=windowSizeX+250;
-        x6=windowSizeX+400;
+    x1=windowSizeX;
+    x2=windowSizeX+150;
+    x3=windowSizeX+150;
+    x4=windowSizeX+300;
+    x5=windowSizeX+300;
+    x6=windowSizeX+450;
+    y3=(int)((maxpuit - minpuit) *(rand()/(RAND_MAX+1.0)));
     }
 
     x1=x1-1;
@@ -148,11 +155,11 @@ int main()
     x4=x4-1;
     x5=x5-1;
     x6=x6-1;
-
+        
     phaut[0].position = sf::Vector2f(x1, 300);
     phaut[1].position = sf::Vector2f(x2, 300);
-    phaut[2].position = sf::Vector2f(x3, 150);
-    phaut[3].position = sf::Vector2f(x4, 150);
+    phaut[2].position = sf::Vector2f(x3, y3);
+    phaut[3].position = sf::Vector2f(x4, y3);
     phaut[4].position = sf::Vector2f(x5, 300);
     phaut[5].position = sf::Vector2f(x6, 300);
 
