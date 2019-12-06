@@ -25,8 +25,8 @@ int main()
 
     int windowSizeX = 800, windowSizeY = 600;
 
-    CircleShape electron(rayon_electron);
-    electron.setFillColor(Color::Blue);
+    //CircleShape electron(rayon_electron);
+    //electron.setFillColor(Color::Blue);
 
     CircleShape photon(rayon_photon);
     photon.setFillColor(Color::Yellow);
@@ -39,7 +39,7 @@ int main()
 //Sprites
 
     Image image;
-    image.loadFromFile("electron5.png");
+    image.loadFromFile("electron.png");
     image.createMaskFromColor(Color::Black);
     Texture tex;
     tex.loadFromImage(image);
@@ -47,6 +47,17 @@ int main()
     sp.setTexture(tex);
     sp.setScale(2*rayon_electron/sp.getLocalBounds().width, 2*rayon_electron/sp.getLocalBounds().height);
     sp.setOrigin(rayon_electron,rayon_electron);
+
+//Background
+
+    Image fond;
+    fond.loadFromFile("background2.png");
+
+//son affichage
+    Texture tex_fond;
+    tex_fond.loadFromImage(fond);
+    Sprite sp_fond;
+    sp_fond.setTexture(tex_fond);
 
 
 //affichage Energie
@@ -68,13 +79,13 @@ int main()
 
     text.setCharacterSize( 25 );
     
-    text.setFillColor( sf::Color::Red );
+    text.setFillColor( sf::Color::White );
     
-    text.setStyle( sf::Text::Style::Bold | sf::Text::Style::Underlined );
+    text.setStyle( sf::Text::Style::Bold );
     
-    text.setOutlineColor( sf::Color::Yellow );
-    text.setOutlineThickness( 10 );
-    text.setPosition(100,100);
+    text.setOutlineColor( sf::Color::Black );
+    text.setOutlineThickness( 3 );
+    text.setPosition(100,50);
 
 
 //Affichage puit
@@ -112,7 +123,13 @@ int main()
             window.close();
         }
         window.clear(Color::Black);
+
+    if (x_electron >= x1 && x_electron <= x6) {//jeu en periode de puits
+        y_electron=y_electron+1;
+    }
+    else {//jeu comme d'hab
     
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && y_electron > 0.0) {
             y_electron = y_electron -10;
             // move up...
@@ -126,7 +143,7 @@ int main()
     
      
     
-    if (x_photon >= windowSizeX) {//hauteur de lancement du photon
+    if (x_photon >= windowSizeX) {//hauteur de lancement du photon et sa reinitialisation lorsqu'il depasse la fenetre
         x_photon=0;
         y_photon=600.0*(rand()/(RAND_MAX+1.0));
     }
@@ -138,6 +155,8 @@ int main()
         Ec = Ec - 0.01;
         x_photon=x_photon+10;
     }
+
+}//fin scenario de jeu normal
     
     if (x6 <= 0) {//gerer la position du puit, 500 equivaut à 500 frames, soit 10 secondes car 50 f/s
     x1=windowSizeX;
@@ -164,12 +183,12 @@ int main()
     phaut[5].position = sf::Vector2f(x6, 300);
 
     
-    electron.setPosition(x_electron,y_electron);
-    window.draw(electron);
+    //electron.setPosition(x_electron,y_electron);
+    //window.draw(electron);
 
+    window.draw(sp_fond);
 
-
-    text.setString( to_string(Ec) );
+    text.setString( "Ec_electron = " + to_string(Ec) + " eV");
     window.draw( text );
 
     sp.setPosition(x_electron+5,y_electron+5);
