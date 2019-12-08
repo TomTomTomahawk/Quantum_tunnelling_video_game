@@ -27,7 +27,6 @@ int main()
 
     double T; // Transmission
     double m_electron=9.109*pow(10,-31);
-    double h= 6.62607015*pow(10,-34);
     double h_planck=1.054*pow(10,-24);
     double charge= 1.6*pow(10,-19);
 
