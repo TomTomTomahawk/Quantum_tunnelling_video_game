@@ -28,7 +28,8 @@ int main()
     double T; // Transmission
     double m_electron=9.109*pow(10,-31);
     double h= 6.62607015*pow(10,-34);
-    double h_planck=h/(2*M_PI);
+    double h_planck=1.054*pow(10,-24);
+    double charge= 1.6*pow(10,-19);
 
     int windowSizeX = 800, windowSizeY = 600;
 
@@ -187,14 +188,17 @@ int main()
 
     if (x_electron >= x1 && x_electron <= x6) {//jeu en periode de puits
         y_electron=windowSizeY-(Ec*windowSizeY)/Ec_max;
-        
-    if(Ec > y3){
-        T=4*Ec*(Ec-y3)/((4*Ec*(Ec-y3))+y3*y3*sin(sqrt(2*m_electron*(Ec-y3)/h_planck)*((x5-x2)/500000000))*sin(sqrt(2*m_electron*(Ec-y3)/h_planck)*((x5-x2)/500000000))); // Transmission pour E>V0
-    } else {
-    
-        T=4*Ec*(y3-Ec)/((4*Ec*(y3-Ec))+y3*y3*sinh(sqrt(2*m_electron*(y3-Ec)/h_planck)*((x5-x2)/500000000))*sinh(sqrt(2*m_electron*(y3-Ec)/h_planck)*((x5-x2)/500000000))); //Transmission pour E<V0
+        double Ec_puit = (-maxpuit*y3)/y_puit +maxpuit;
+	double epaisseur=pow(10,-9);
 
+    if(Ec <Ec_puit){
+         T=1/(1+Ec_puit*Ec_puit/
+(4*Ec*charge*(Ec_puit-Ec))*pow(sinh(sqrt(2*m_electron*charge*(Ec_puit-Ec))/(h_planck)*epaisseur),2));//Transmission pour E<V0
+}else {
+        T=4*Ec*(Ec-Ec_puit)/((4*Ec*(Ec-Ec_puit))+Ec_puit*Ec_puit*pow(sin(sqrt(2*m_electron*charge*(Ec-Ec_puit)/h_planck)*(2*pow(10,-9))),2)); // Transmission pour E>V0
     }
+    
+
     
         
     }
